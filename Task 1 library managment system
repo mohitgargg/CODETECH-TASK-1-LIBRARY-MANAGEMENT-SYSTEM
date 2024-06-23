@@ -1,0 +1,133 @@
+create database librarymanagementsystem;
+use librarymanagementsystem;
+
+create table books(
+ book_id varchar(100) primary key, 
+ title varchar(100),
+ author varchar(100),
+ genre varchar(100),
+ published_year int,
+ available_copies int
+ );
+ 
+create table  members (
+member_id varchar(100) primary key,
+first_name varchar(100),
+last_name varchar(100),
+email varchar(255),
+phone_number varchar(100),
+membership_date date
+);
+
+create table transactions(
+transaction_id varchar(100) primary key,
+book_id varchar(100),
+member_id varchar(100),
+borrow_date date ,
+return_date date, 
+foreign key (book_id) references books(book_id) on delete cascade,
+foreign key(member_id) references  members(member_id) on delete cascade 
+);
+    
+insert into books
+(book_id,title, author, genre, published_year, available_copies)
+values
+('B-101','To Kill a Mockingbird', 'Harper Lee', 'Fiction', 1960, 5),
+('B-102','1984', 'George Orwell', 'Dystopian', 1949, 3),
+('B-103','The Great Gatsby', 'F. Scott Fitzgerald', 'Classics', 1925, 2),
+('B-104','To Kill a Mockingbird', 'Harper Lee', 'Fiction', 1960, 5),
+('B-105','1984', 'George Orwell', 'Dystopian', 1949, 3),
+('B-106','The Great Gatsby', 'F. Scott Fitzgerald', 'Classics', 1925, 2),
+('B-107','Pride and Prejudice', 'Jane Austen', 'Romance', 1813, 4),
+('B-108','The Catcher in the Rye', 'J.D. Salinger', 'Fiction', 1951, 6),
+('B-109','Moby-Dick', 'Herman Melville', 'Adventure', 1851, 3),
+('B-110','War and Peace', 'Leo Tolstoy', 'Historical Fiction', 1869, 2),
+('B-111','The Hobbit', 'J.R.R. Tolkien', 'Fantasy', 1937, 5),
+('B-112','Brave New World', 'Aldous Huxley', 'Dystopian', 1932, 4),
+('B-113','The Lord of the Rings', 'J.R.R. Tolkien', 'Fantasy', 1954, 3),
+('B-114','Crime and Punishment', 'Fyodor Dostoevsky', 'Philosophical Fiction', 1866, 2),
+('B-115','The Adventures of Huckleberry Finn', 'Mark Twain', 'Adventure', 1884, 7),
+('B-116','The Brothers Karamazov', 'Fyodor Dostoevsky', 'Philosophical Fiction', 1880, 2);
+
+insert into members 
+(member_id,first_name, last_name, email, phone_number, membership_date)
+values
+('M-101','John', 'Doe', 'john.doe@example.com', '1234567890', '2023-01-01'),
+('M-102','Jane', 'Smith', 'jane.smith@example.com', '0987654321', '2023-02-01'),
+('M-103','Alice', 'Johnson', 'alice.johnson@example.com', '2345678901', '2023-03-01'),
+('M-104','Bob', 'Brown', 'bob.brown@example.com', '3456789012', '2023-04-01'),
+('M-105','Charlie', 'Davis', 'charlie.davis@example.com', '4567890123', '2023-05-01'),
+('M-106','Diana', 'Evans', 'diana.evans@example.com', '5678901234', '2023-06-01'),
+('M-107','Edward', 'Garcia', 'edward.garcia@example.com', '6789012345', '2023-07-01'),
+('M-108','Fiona', 'Harris', 'fiona.harris@example.com', '7890123456', '2023-08-01'),
+('M-109','George', 'Clark', 'george.clark@example.com', '8901234567', '2023-09-01'),
+('M-110','Hannah', 'Lewis', 'hannah.lewis@example.com', '9012345678', '2023-10-01'),
+('M-111','Ivy', 'Walker', 'ivy.walker@example.com', '1234567809', '2023-11-01'),
+('M-112','Jack', 'Young', 'jack.young@example.com', '2345678910', '2023-12-01'),
+('M-113','Karen', 'Martinez', 'karen.martinez@example.com', '3456789012', '2023-11-15'),
+('M-114','Liam', 'Robinson', 'liam.robinson@example.com', '4567890123', '2023-10-20'),
+('M-115','Mia', 'Clark', 'mia.clark@example.com', '5678901234', '2023-09-25'),
+('M-116','Noah', 'Lewis', 'noah.lewis@example.com', '6789012345', '2023-08-30');
+
+insert into transactions 
+(transaction_id,book_id, member_id, borrow_date) 
+values
+('T-101', 'B-101', 'M-101', '2023-06-01'),
+('T-102', 'B-102', 'M-102', '2023-06-15'),
+('T-103', 'B-103', 'M-103', '2023-06-11'),
+('T-104', 'B-104', 'M-104', '2023-03-12'),
+('T-105', 'B-105', 'M-105', '2023-05-01'),
+('T-106', 'B-106', 'M-106', '2023-04-15'),
+('T-107', 'B-107', 'M-107', '2023-10-01'),
+('T-108', 'B-108', 'M-108', '2023-02-15'),
+('T-109', 'B-109', 'M-109', '2023-02-01'),
+('T-110', 'B-110', 'M-110', '2023-04-15'),
+('T-111', 'B-111', 'M-111', '2023-04-01'),
+('T-112', 'B-112', 'M-112', '2023-09-15'),
+('T-113', 'B-113', 'M-113', '2023-08-01'),
+('T-114', 'B-114', 'M-114', '2023-07-05'),
+('T-115', 'B-115', 'M-115', '2023-12-11'),
+('T-116', 'B-116', 'M-116', '2023-11-10');
+
+-- Update the number of available copies of a book
+update books
+set available_copies = 4
+where book_id = 'B-106';
+
+-- Update a member's contact information
+update members
+set phone_number = '1112223333'
+where member_id ='M-101' ;
+
+-- Record the return of a borrowed book
+update  transactions
+set return_date = '2023-06-10'
+where  transaction_id = 'T-105';
+
+-- Retrieve all books
+select * from books;
+
+-- Retrieve all members
+select * from members;
+
+-- Retrieve all transactions
+select *  from transactions;
+
+-- Retrieve members who have borrowed books
+select m.first_name, m.last_name, t.book_id, t.borrow_date, t.return_date
+from members m
+join transactions t on m.member_id = t.member_id;
+
+-- Delete a book from the books table
+delete from books
+where book_id = 'B-116';
+
+ -- Delete a member from the members table
+Delete from members
+where member_id ='M-116';
+
+-- Delete a transaction record
+delete from transactions
+where transaction_id = 'T-116';
+ 
+ 

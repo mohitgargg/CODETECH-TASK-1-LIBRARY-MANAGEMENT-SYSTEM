@@ -1,5 +1,8 @@
+# Create a Database called 'librarymanagementsystem' 
 create database librarymanagementsystem;
 use librarymanagementsystem;
+
+# create table "books"
 
 create table books(
  book_id varchar(100) primary key, 
@@ -9,7 +12,9 @@ create table books(
  published_year int,
  available_copies int
  );
- 
+
+# create table "members"
+
 create table  members (
 member_id varchar(100) primary key,
 first_name varchar(100),
@@ -18,6 +23,8 @@ email varchar(255),
 phone_number varchar(100),
 membership_date date
 );
+
+# create table " transactions"
 
 create table transactions(
 transaction_id varchar(100) primary key,
@@ -29,6 +36,9 @@ foreign key (book_id) references books(book_id) on delete cascade,
 foreign key(member_id) references  members(member_id) on delete cascade 
 );
     
+# Insert values into each tables
+
+
 insert into books
 (book_id,title, author, genre, published_year, available_copies)
 values
@@ -89,6 +99,8 @@ values
 ('T-115', 'B-115', 'M-115', '2023-12-11'),
 ('T-116', 'B-116', 'M-116', '2023-11-10');
 
+/*update*/
+
 -- Update the number of available copies of a book
 update books
 set available_copies = 4
@@ -104,6 +116,8 @@ update  transactions
 set return_date = '2023-06-10'
 where  transaction_id = 'T-105';
 
+/*Queries*/
+
 -- Retrieve all books
 select * from books;
 
@@ -117,6 +131,8 @@ select *  from transactions;
 select m.first_name, m.last_name, t.book_id, t.borrow_date, t.return_date
 from members m
 join transactions t on m.member_id = t.member_id;
+
+/*delete*/
 
 -- Delete a book from the books table
 delete from books
